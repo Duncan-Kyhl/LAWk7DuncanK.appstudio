@@ -1,4 +1,4 @@
-/*
+
 //  Initialize variables
 let query = ""
 let req = {}
@@ -8,7 +8,7 @@ let results = []
 
 //  Textaread shows customer names upon loading
 
-customerAdd.onshow=function(){
+customerUpdate.onshow=function(){
 
 //  SELECT CODE Cleaned up
   query = "SELECT * FROM customer375"
@@ -18,36 +18,30 @@ customerAdd.onshow=function(){
     results = JSON.parse(req.responseText)
     console.log(`The results are \n ${results}`)
     if (results.length == 0)
-      lblMessage3.value = "There are no customers in the database."
+      lblMessage4.value = "There are no customers in the database."
     else {
       let message = ""
       for (i = 0; i < results.length; i++)
         message = message + results[i][1] + "\n"  
-      txtaCustomer3.value = message
+      txtaCustomer4.value = message
     } // end else
 
   } else // the transit didn't work - bad wifi? server turned off?
-    lblMessage3.value = "Error code: " + req.status
+    lblMessage4.value = "Error code: " + req.status
 }
 
-btnAddCustomer.onclick=function(){
+btnUpdateCustomer.onclick=function(){
 //  SELECT CODE Cleaned up
-  let name = inptName.value
-  let street = inptStreet.value
-  let city = inptCity.value
-  let state = inptState.value
-  let zipcode = inptZipcode.value
-  query = `INSERT INTO customer375 VALUES = ${name} ${street} ${city} ${state} ${zipcode}`
+  let currentName = inptCurrentName.value
+  let newName = inptNewName.value
+  query = `UPDATE customer375 SET name = ${newName} WHERE name = ${currentName}`
   alert(query)
   req = Ajax("https://ormond.creighton.edu/courses/375/ajax-connection.php", "POST", "host=ormond.creighton.edu&user=" + netID + "&pass=" + pw + "&database=" + netID + "&query=" + query)
 
   if (req.status == 200) { //transit trip worked.
-    lblAddConfirmation.value = `Customer ${name} has been added!`
+    lblUpdateConfirmation.value = `Customer ${currentName}'s name has been updated to ${newName}!`
 
   } else // the transit didn't work - bad wifi? server turned off?
-    lblAddConfirmation.value = "Error code: " + req.status
+    lblUpdateConfirmation.value = "Error code: " + req.status
 }
 
-//Jesse Antiques, 1113 F St, Omaha, NE, 68178
-
-*/
